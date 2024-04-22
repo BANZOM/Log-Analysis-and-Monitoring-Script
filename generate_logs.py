@@ -16,7 +16,7 @@ class GenerateLogs:
         generate_logs: Generates logs based on specified parameters.
         generate_log_entry: Generates a log entry.
     """
-    def __init__(self, log_file: str = 'sample.log', num_logs: int = 100):
+    def __init__(self, log_file: str = 'sample.log', num_logs: int = 10):
         self.levels = ['INFO', 'DEBUG', 'ERROR', 'WARNING', 'CRITICAL', 'FATAL']
         self.messages = [
             "Application started",
@@ -67,3 +67,7 @@ class GenerateLogs:
         """
         timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
         return f"{timestamp} - {level}: {message}\n"
+    
+if __name__ == '__main__':
+    logs = GenerateLogs()
+    logs.generate_logs()
