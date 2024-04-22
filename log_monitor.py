@@ -1,6 +1,7 @@
 import os
 import time
 import sys
+from collections import Counter
 
 class LogMonitor:
     """
@@ -11,9 +12,12 @@ class LogMonitor:
     
     Methods:
         monitor_logs: Monitors logs for new entries.
+        analyze_log_entry: Analyzes a log entry for error messages, failures, HTTP status codes, etc.
     """
     def __init__(self, log_file: str = 'sample.log'):
         self.log_file = log_file
+        self.log_analysis = Counter()
+    
     def monitor_logs(self):
         """
         Monitors logs for new entries.
@@ -25,6 +29,7 @@ class LogMonitor:
                     line = f.readline()
                     if line:
                         print(line.rstrip())
+                        self.analyze_log_entry(line)
                     else:
                         time.sleep(1)
         except FileNotFoundError:
@@ -34,6 +39,28 @@ class LogMonitor:
             print("\nLog monitoring stopped.")
             return
         
+    def analyze_log_entry(self, log_entry: str):
+        """
+        Analyzes a log entry for error messages, failures, HTTP status codes, etc.
+        """
+        error_keywords = ['error', 'fail', 'exception', 'warning', 'fatal', 'critical']
+        http_status_codes = [str(code) for code in range(400, 600)]
+        
+        error_count = sum(keyword in log_entry.lower() for keyword in error_keywords)
+        http_error_count = sum(status_code in log_entry for status_code in http_status_codes)
+
+        self.log_analysis.update({'errors': error_count, 'http_errors': http_error_count})
+
+    def generate_report(self):
+        """
+        Generates a report of log analysis.
+        """
+        print("-------------------")
+        print("Log Analysis Report")
+        print("-------------------")
+        for key, value in self.log_analysis.items():
+            print(f"{key.capitalize()}: {value}")
+        print("-------------------")        
 
 
 if __name__ == "__main__":
@@ -43,3 +70,4 @@ if __name__ == "__main__":
     else:
         log_monitor = LogMonitor()
     log_monitor.monitor_logs()
+    log_monitor.generate_report()
