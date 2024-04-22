@@ -1,5 +1,5 @@
+import os
 import time
-
 
 class LogMonitor:
     """
@@ -17,18 +17,24 @@ class LogMonitor:
         """
         Monitors logs for new entries.
         """
-        with open(self.log_file, 'r') as f:
-            while True:
-                new_log = f.readline()
-                if new_log:
-                    print(new_log)
-                else:
-                    time.sleep(1)
+        try:
+            with open(self.log_file, 'r') as f:
+                f.seek(0, os.SEEK_END)
+                while True:
+                    line = f.readline()
+                    if line:
+                        print(line.rstrip())
+                    else:
+                        time.sleep(1)
+        except FileNotFoundError:
+            print(f"Log file '{self.log_file}' not found.")
+            return
+        except KeyboardInterrupt:
+            print("\nLog monitoring stopped.")
+            return
+        
 
 
 if __name__ == "__main__":
     log_monitor = LogMonitor()
-    try:
-        log_monitor.monitor_logs()
-    except KeyboardInterrupt:
-        print("Exiting log monitor")
+    log_monitor.monitor_logs()
