@@ -1,4 +1,4 @@
-# Log Analysis and Monitoring Script v0.2
+# Log Analysis and Monitoring Script v0.3
 
 This project is a log analysis and monitoring script that helps analyze and monitor log files. 
 This project provides monitoring and analysis capabilities for log files.
