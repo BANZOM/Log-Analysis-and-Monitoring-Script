@@ -71,5 +71,8 @@ class GenerateLogs:
         return f"{timestamp} - {level}: {message}\n"
     
 if __name__ == '__main__':
-    logs = GenerateLogs()
-    logs.generate_logs()
+    logs = GenerateLogs(num_logs=0)
+    try:
+        logs.generate_logs()
+    except KeyboardInterrupt:
+        print("Logs generation stopped by user.")
