@@ -13,6 +13,7 @@ class LogMonitor:
     Methods:
         monitor_logs: Monitors logs for new entries.
         analyze_log_entry: Analyzes a log entry for error messages, failures, HTTP status codes, etc.
+        generate_report: Generates a report of log analysis.
     """
     def __init__(self, log_file: str = 'sample.log'):
         self.log_file = log_file

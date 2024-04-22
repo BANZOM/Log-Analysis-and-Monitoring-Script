@@ -16,6 +16,7 @@ class GenerateLogs:
     Methods:
         generate_logs: Generates logs based on specified parameters.
         generate_log_entry: Generates a log entry.
+        generate_log: Generates a single log entry.
     """
     def __init__(self, log_file: str = 'sample.log', num_logs: int = 10):
         self.levels = ['INFO', 'DEBUG', 'ERROR', 'WARNING', 'CRITICAL', 'FATAL']
