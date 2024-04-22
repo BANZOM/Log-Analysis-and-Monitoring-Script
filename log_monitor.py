@@ -17,6 +17,7 @@ class LogMonitor:
     def __init__(self, log_file: str = 'sample.log'):
         self.log_file = log_file
         self.log_analysis = Counter()
+        self.error_messages = Counter()
     
     def monitor_logs(self):
         """
@@ -51,6 +52,11 @@ class LogMonitor:
 
         self.log_analysis.update({'errors': error_count, 'http_errors': http_error_count})
 
+        # Store error messages and count occurrences
+        if error_count > 0 or http_error_count > 0:
+            error_message = log_entry.split(':')[-1].strip()
+            self.error_messages[error_message] += 1
+
     def generate_report(self):
         """
         Generates a report of log analysis.
@@ -60,7 +66,13 @@ class LogMonitor:
         print("-------------------")
         for key, value in self.log_analysis.items():
             print(f"{key.capitalize()}: {value}")
-        print("-------------------")        
+        print("-------------------")  
+        print("Top 5 Error Messages")
+        print("-------------------")
+        for error_message, count in self.error_messages.most_common(5):
+            print(f"{error_message}: {count}")
+        print("-------------------")
+
 
 
 if __name__ == "__main__":
