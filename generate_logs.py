@@ -42,20 +42,22 @@ class GenerateLogs:
         """
         if self.num_logs == 0:
             while True:
-                level = random.choice(self.levels)
-                message = random.choice(self.messages)
-                log_entry = self.generate_log_entry(level, message)
-                with open(self.log_file, 'a') as f:
-                    f.write(log_entry)
+                self.generate_log()
                 time.sleep(random.uniform(1, 5))
         else:
             for _ in range(self.num_logs):
-                level = random.choice(self.levels)
-                message = random.choice(self.messages)
-                log_entry = self.generate_log_entry(level, message)
-                with open(self.log_file, 'a') as f:
-                    f.write(log_entry)
+                self.generate_log()
                 time.sleep(random.uniform(1, 5))
+    
+    def generate_log(self):
+        """
+        Generates a single log entry.
+        """
+        level = random.choice(self.levels)
+        message = random.choice(self.messages)
+        log_entry = self.generate_log_entry(level, message)
+        with open(self.log_file, 'a') as f:
+            f.write(log_entry)
 
     def generate_log_entry(self, level: str, message: str) -> str:
         """
