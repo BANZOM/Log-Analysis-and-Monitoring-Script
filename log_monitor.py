@@ -1,5 +1,6 @@
 import os
 import time
+import sys
 
 class LogMonitor:
     """
@@ -36,5 +37,9 @@ class LogMonitor:
 
 
 if __name__ == "__main__":
-    log_monitor = LogMonitor()
+    if len(sys.argv) > 1:
+        log_file = sys.argv[1]
+        log_monitor = LogMonitor(log_file)
+    else:
+        log_monitor = LogMonitor()
     log_monitor.monitor_logs()

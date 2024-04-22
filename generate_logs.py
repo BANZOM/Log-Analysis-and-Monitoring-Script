@@ -1,5 +1,6 @@
 import time
 import random
+import sys
 
 class GenerateLogs:
     """
@@ -71,7 +72,8 @@ class GenerateLogs:
         return f"{timestamp} - {level}: {message}\n"
     
 if __name__ == '__main__':
-    logs = GenerateLogs(num_logs=0)
+    num_logs = int(sys.argv[1]) if len(sys.argv) > 1 else 0
+    logs = GenerateLogs(num_logs=num_logs)
     try:
         logs.generate_logs()
     except KeyboardInterrupt:
